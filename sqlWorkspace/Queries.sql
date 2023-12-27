@@ -2,7 +2,17 @@
 
 -- 1.   List the total budget allocated for projects in each country, along with the count of projects per country.
 --      Display sorted by the total budget in descending order
-SELECT CustomerCountry as Country, SUM(Budget) AS 'TotalBudget', COUNT(ProjectID) AS "ProjectCount" FROM Projects JOIN Customers C on Projects.CustomerID = C.CustomerID GROUP BY CustomerCountry ORDER BY TotalBudget DESC;
+SELECT
+    CustomerCountry AS Country,
+    SUM(Budget) AS 'TotalBudget',
+    COUNT(ProjectID) AS "ProjectCount"
+FROM Projects
+    JOIN Customers C ON
+        Projects.CustomerID = C.CustomerID
+GROUP BY CustomerCountry
+ORDER BY TotalBudget DESC;
+
+
 
 
 
@@ -12,7 +22,7 @@ SELECT CustomerCountry as Country, SUM(Budget) AS 'TotalBudget', COUNT(ProjectID
 -- Uses a sub-query to calculate the number of days taken & asset count for each project
 -- Then queries the average dev time when grouped by asset count
 SELECT
-    AVG(DaysTaken) as AverageDevTime,
+    AVG(DaysTaken) AS AverageDevTime,
     AssetCount
 FROM (
     SELECT
