@@ -14,9 +14,6 @@ ORDER BY TotalBudget DESC;
 
 
 
-
-
-
 -- 2.   List the average development time for projects, categorized by the number of assets used.
 
 -- Uses a sub-query to calculate the number of days taken & asset count for each project
@@ -54,11 +51,15 @@ ORDER BY SuccessfulProjects DESC
 LIMIT 3;
 
 
+
+
+
 -- Next, you are also required to demonstrate the following three general SQL concepts using
 -- no fewer than three distinct SQL statements:
 -- 1. SELECT with LIKE and OR
 -- 2. SELECT with DISTINCT and ORDER BY
 -- 3. Subquery with SELECT
+
 
 
 -- 1.  Order all developers with "designer" or "engineer" in their specialization by years of experience
@@ -71,3 +72,13 @@ WHERE
     OR
     LOWER(Specialization) LIKE '%engineer'
 ORDER BY ExperienceYears DESC;
+
+
+
+-- 2. Select all project leads and sort alphabetically
+SELECT DISTINCT Name
+FROM Developers
+    JOIN ProjectDevelopers PD ON Developers.DeveloperID = PD.DeveloperID
+    JOIN Projects P ON PD.ProjectID = P.ProjectID
+WHERE LOWER(Role) IS 'lead'
+ORDER BY Name ASC;
