@@ -35,3 +35,19 @@ FROM (
 )
 GROUP BY AssetCount;
 
+
+
+-- 3.   List the top three developers based on the number of successful projects they’ve been involved in.
+--      Display the results.
+
+SELECT
+    Name,
+    COUNT(ProjectDevelopers.ProjectID) AS SuccessfulProjects
+FROM ProjectDevelopers
+    LEFT JOIN Projects P ON
+        ProjectDevelopers.ProjectID = P.ProjectID
+    JOIN Developers D ON
+        ProjectDevelopers.DeveloperID = D.DeveloperID
+WHERE Status IS 'Completed'
+GROUP BY D.DeveloperID
+ORDER BY SuccessfulProjects DESC;
