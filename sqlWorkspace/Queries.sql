@@ -50,4 +50,5 @@ FROM ProjectDevelopers
         ProjectDevelopers.DeveloperID = D.DeveloperID
 WHERE Status IS 'Completed'
 GROUP BY D.DeveloperID
-ORDER BY SuccessfulProjects DESC;
+ORDER BY SuccessfulProjects DESC
+LIMIT 3;
