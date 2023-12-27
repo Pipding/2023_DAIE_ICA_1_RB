@@ -9,5 +9,19 @@ SELECT CustomerCountry as Country, SUM(Budget) AS 'TotalBudget', COUNT(ProjectID
 
 -- 2.   List the average development time for projects, categorized by the number of assets used.
 
--- Get the asset counts
-SELECT ProjectName, (JULIANDAY(EndDate) - JULIANDAY(StartDate)) AS DaysTaken, COUNT(AssetID) AS AssetCount FROM Projects LEFT JOIN Assets A on Projects.ProjectID = A.ProjectID GROUP BY ProjectName;
+-- Uses a sub-query to calculate the number of days taken & asset count for each project
+-- Then queries the average dev time when grouped by asset count
+SELECT
+    AVG(DaysTaken) as AverageDevTime,
+    AssetCount
+FROM (
+    SELECT
+        COUNT(AssetID) AS AssetCount,
+        (JULIANDAY(EndDate) - JULIANDAY(StartDate)) AS DaysTaken
+    FROM Projects
+        LEFT JOIN Assets A ON
+            Projects.ProjectID = A.ProjectID
+    GROUP BY Projects.ProjectID
+)
+GROUP BY AssetCount;
+
