@@ -45,7 +45,8 @@ FROM ProjectDevelopers
         ProjectDevelopers.ProjectID = P.ProjectID
     JOIN Developers D ON
         ProjectDevelopers.DeveloperID = D.DeveloperID
-WHERE Status IS 'Completed'
+WHERE
+    Status IS 'Completed'
 GROUP BY D.DeveloperID
 ORDER BY SuccessfulProjects DESC
 LIMIT 3;
@@ -80,5 +81,28 @@ SELECT DISTINCT Name
 FROM Developers
     JOIN ProjectDevelopers PD ON Developers.DeveloperID = PD.DeveloperID
     JOIN Projects P ON PD.ProjectID = P.ProjectID
-WHERE LOWER(Role) IS 'lead'
+WHERE
+    LOWER(Role) IS 'lead'
 ORDER BY Name ASC;
+
+
+
+-- 3. Get names and specializations of all developers who have worked on more than 1 project
+
+-- The subquery is justified here because the WHERE condition acts on the computed ProjectCount, which is an aggregate
+-- call. This isn't allowed in SQLite so a subquery is required
+SELECT
+    Name,
+    Specialization,
+    ProjectCount
+FROM (
+    SELECT
+        Name,
+        Specialization,
+        COUNT(ProjectID) AS ProjectCount
+    FROM ProjectDevelopers
+    JOIN Developers D on D.DeveloperID = ProjectDevelopers.DeveloperID
+    GROUP BY D.DeveloperID
+)
+WHERE ProjectCount > 1
+ORDER BY ProjectCount DESC;
