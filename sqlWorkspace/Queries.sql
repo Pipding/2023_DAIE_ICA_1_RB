@@ -52,3 +52,22 @@ WHERE Status IS 'Completed'
 GROUP BY D.DeveloperID
 ORDER BY SuccessfulProjects DESC
 LIMIT 3;
+
+
+-- Next, you are also required to demonstrate the following three general SQL concepts using
+-- no fewer than three distinct SQL statements:
+-- 1. SELECT with LIKE and OR
+-- 2. SELECT with DISTINCT and ORDER BY
+-- 3. Subquery with SELECT
+
+
+-- 1.  Order all developers with "designer" or "engineer" in their specialization by years of experience
+
+SELECT
+    Name, Specialization, ExperienceYears
+FROM Developers
+WHERE
+    LOWER(Specialization) LIKE '%designer'
+    OR
+    LOWER(Specialization) LIKE '%engineer'
+ORDER BY ExperienceYears DESC;
