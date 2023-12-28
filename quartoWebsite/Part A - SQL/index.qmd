@@ -48,9 +48,9 @@ dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
 if(length(projectBudgets) <= 7) {
-  knitr::kable(head(projectBudgets, 7))
+  knitr::kable(head(projectBudgets, 7), align='lcc')
 } else {
-  DT::datatable(projectBudgets, options = list(pageLength = 8))
+  DT::datatable(projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
 }
 ```
 
