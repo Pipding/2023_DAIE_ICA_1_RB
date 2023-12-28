@@ -265,8 +265,8 @@ dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
 if(nrow(multiProjectDevs) <= 7) {
-  knitr::kable(head(multiProjectDevs, 7))
+  knitr::kable(head(multiProjectDevs, 7), align = 'lcc')
 } else {
-  DT::datatable(multiProjectDevs, options = list(pageLength = 8))
+  DT::datatable(multiProjectDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
 }
 ```
