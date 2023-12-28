@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Part A - SQL",
     "section": "",
-    "text": "# TODO: Cross-references don't work with DT::datatable (source: https://github.com/quarto-dev/quarto-cli/discussions/6311). Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future ?@tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country\n\n\n?(caption)"
+    "text": "Core SQL Queries\n\n1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order\n?@tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country\n\n\n?(caption)\n\n\n\n\n\n\n\n\n\n\n\n2. List the average development time for projects, categorized by the number of assets used\n?@tbl-devtimebyassetsused presents the average development time for projects, grouped by the number of assets used\n\n\n?(caption)"
   },
   {
     "objectID": "about.html",

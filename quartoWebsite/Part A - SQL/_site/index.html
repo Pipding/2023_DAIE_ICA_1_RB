@@ -110,7 +110,17 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#core-sql-queries" id="toc-core-sql-queries" class="nav-link active" data-scroll-target="#core-sql-queries">Core SQL Queries</a>
+  <ul class="collapse">
+  <li><a href="#list-the-total-budget-allocated-for-projects-in-each-country-along-with-the-count-of-projects-per-country.-display-sorted-by-the-total-budget-in-descending-order" id="toc-list-the-total-budget-allocated-for-projects-in-each-country-along-with-the-count-of-projects-per-country.-display-sorted-by-the-total-budget-in-descending-order" class="nav-link" data-scroll-target="#list-the-total-budget-allocated-for-projects-in-each-country-along-with-the-count-of-projects-per-country.-display-sorted-by-the-total-budget-in-descending-order">1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order</a></li>
+  <li><a href="#list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used" id="toc-list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used" class="nav-link" data-scroll-target="#list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used">2. List the average development time for projects, categorized by the number of assets used</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -132,21 +142,43 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p><code># TODO: Cross-references don't work with DT::datatable (source: https://github.com/quarto-dev/quarto-cli/discussions/6311). Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future</code> <strong>?@tbl-projectbudgetspercountry</strong> presents the total budget allocated for projects in each country, along with the number of projects per country</p>
-<div id="tbl-projectbudgetspercountry" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Project count and budget per country">
+<section id="core-sql-queries" class="level1">
+<h1>Core SQL Queries</h1>
+<section id="list-the-total-budget-allocated-for-projects-in-each-country-along-with-the-count-of-projects-per-country.-display-sorted-by-the-total-budget-in-descending-order" class="level3">
+<h3 class="anchored" data-anchor-id="list-the-total-budget-allocated-for-projects-in-each-country-along-with-the-count-of-projects-per-country.-display-sorted-by-the-total-budget-in-descending-order">1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order</h3>
+<p><strong>?@tbl-projectbudgetspercountry</strong> presents the total budget allocated for projects in each country, along with the number of projects per country</p>
+<div id="tbl-projectbudgetspercountry" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Project count and budget per country" data-hash="index_cache/html/tbl-projectbudgetspercountry_b0aa38a54b7c7aba95ad0ccb18fb372c">
 <div class="panel-caption table-caption">
 <p><strong>?(caption)</strong></p>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-47704a08e78533e2e46b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-47704a08e78533e2e46b">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["Spain","UK","Netherlands","Italy","France","Germany"],[650000,550000,400000,250000,200000,150000],[2,2,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Country<\/th>\n      <th>TotalBudget<\/th>\n      <th>ProjectCount<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Country","targets":1},{"name":"TotalBudget","targets":2},{"name":"ProjectCount","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-8a8818184237dccf3520" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8a8818184237dccf3520">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["Spain","UK","Netherlands","Italy","France","Germany"],[650000,550000,400000,250000,200000,150000],[2,2,1,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Country<\/th>\n      <th>TotalBudget<\/th>\n      <th>ProjectCount<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Country","targets":1},{"name":"TotalBudget","targets":2},{"name":"ProjectCount","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</section>
+<section id="list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used" class="level3">
+<h3 class="anchored" data-anchor-id="list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used">2. List the average development time for projects, categorized by the number of assets used</h3>
+<p><strong>?@tbl-devtimebyassetsused</strong> presents the average development time for projects, grouped by the number of assets used</p>
+<div id="tbl-devtimebyassetsused" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Average development time for projects, grouped by" data-hash="index_cache/html/tbl-devtimebyassetsused_bd98f099b2f1526e7c511a38904b324b">
+<div class="panel-caption table-caption">
+<p><strong>?(caption)</strong></p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2b7cb9ef4529006619fb" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2b7cb9ef4529006619fb">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],[258.25,212.5,181.5],[0,10,11]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>AverageDevTime<\/th>\n      <th>AssetCount<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[1,2]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"AverageDevTime","targets":1},{"name":"AssetCount","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
