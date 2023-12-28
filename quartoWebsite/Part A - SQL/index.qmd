@@ -92,9 +92,9 @@ dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
 if(length(avgDevTimeByAssetCount) <= 7) {
-  knitr::kable(head(avgDevTimeByAssetCount, 7))
+  knitr::kable(head(avgDevTimeByAssetCount, 7), align='c')
 } else {
-  DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8))
+  DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 0:2))))
 }
 ```
 
