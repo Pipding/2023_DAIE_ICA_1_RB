@@ -47,7 +47,7 @@ projectBudgets <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(projectBudgets) <= 7) {
+if(nrow(projectBudgets) <= 7) {
   knitr::kable(head(projectBudgets, 7), align='lcc')
 } else {
   DT::datatable(projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
@@ -91,7 +91,7 @@ avgDevTimeByAssetCount <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(avgDevTimeByAssetCount) <= 7) {
+if(nrow(avgDevTimeByAssetCount) <= 7) {
   knitr::kable(head(avgDevTimeByAssetCount, 7), align='c')
 } else {
   DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 0:2))))
@@ -135,7 +135,7 @@ mostSuccessfulDevs <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(mostSuccessfulDevs) <= 7) {
+if(nrow(mostSuccessfulDevs) <= 7) {
   knitr::kable(head(mostSuccessfulDevs, 7), align='lc')
 } else {
   DT::datatable(mostSuccessfulDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2))))
@@ -176,7 +176,7 @@ designersAndEngineersExperience <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(designersAndEngineersExperience) <= 7) {
+if(nrow(designersAndEngineersExperience) <= 7) {
   knitr::kable(head(designersAndEngineersExperience, 7), align = 'lcc')
 } else {
   DT::datatable(designersAndEngineersExperience, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
@@ -214,10 +214,10 @@ projectLeads <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(projectLeads) <= 7) {
-  knitr::kable(head(projectLeads, 7))
+if(nrow(projectLeads) <= 7) {
+  knitr::kable(head(projectLeads, 7), align = 'c')
 } else {
-  DT::datatable(projectLeads, options = list(pageLength = 8))
+  DT::datatable(projectLeads, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 1))))
 }
 ```
 
@@ -264,7 +264,7 @@ multiProjectDevs <- dbGetQuery(
 dbDisconnect(con)
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
-if(length(multiProjectDevs) <= 7) {
+if(nrow(multiProjectDevs) <= 7) {
   knitr::kable(head(multiProjectDevs, 7))
 } else {
   DT::datatable(multiProjectDevs, options = list(pageLength = 8))
