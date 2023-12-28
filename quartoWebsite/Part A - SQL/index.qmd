@@ -178,3 +178,40 @@ dbDisconnect(con)
 # Show the first 8 rows + pagination
 DT::datatable(designersAndEngineersExperience, options = list(pageLength = 8))
 ```
+
+
+
+### 2. *SELECT* with *DISTINCT* and *ORDER BY*
+
+@tbl-projectleads presents the names of all project leads
+
+```{r}
+#| label: tbl-projectleads
+#| tbl-cap: Project leads
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+projectLeads <- dbGetQuery(
+  con,
+  'SELECT DISTINCT Name
+  FROM Developers
+      JOIN ProjectDevelopers PD ON Developers.DeveloperID = PD.DeveloperID
+      JOIN Projects P ON PD.ProjectID = P.ProjectID
+  WHERE
+      LOWER(Role) IS \'lead\'
+  ORDER BY Name ASC;'
+)
+
+dbDisconnect(con)
+
+# TODO: Cross-references don't work with DT::datatable: https://github.com/quarto-dev/quarto-cli/discussions/6311
+# Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future
+
+# Show the first 8 rows + pagination
+DT::datatable(projectLeads, options = list(pageLength = 8))
+```
