@@ -42,7 +42,7 @@ projectBudgets <- dbGetQuery(
           Projects.CustomerID = C.CustomerID
   GROUP BY CustomerCountry
   ORDER BY TotalBudget DESC;'
-  )
+)
 
 dbDisconnect(con)
 
@@ -85,7 +85,7 @@ avgDevTimeByAssetCount <- dbGetQuery(
       GROUP BY Projects.ProjectID
   )
   GROUP BY AssetCount;'
-  )
+)
 
 dbDisconnect(con)
 
@@ -94,4 +94,47 @@ dbDisconnect(con)
 
 # Show the first 8 rows + pagination
 DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8))
+```
+
+
+
+### 3. List the top three developers based on the number of successful projects they’ve been involved in. Display the results
+
+@tbl-mostsuccessfuldevs presents the 3 developers with the highest number of completed projects
+
+```{r}
+#| label: tbl-mostsuccessfuldevs
+#| tbl-cap: Developers with the highest number of successful projects
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+mostSuccessfulDevs <- dbGetQuery(
+  con,
+  'SELECT
+      Name,
+      COUNT(ProjectDevelopers.ProjectID) AS SuccessfulProjects
+  FROM ProjectDevelopers
+      LEFT JOIN Projects P ON
+          ProjectDevelopers.ProjectID = P.ProjectID
+      JOIN Developers D ON
+          ProjectDevelopers.DeveloperID = D.DeveloperID
+  WHERE
+      Status IS \'Completed\'
+  GROUP BY D.DeveloperID
+  ORDER BY SuccessfulProjects DESC
+  LIMIT 3;'
+)
+
+dbDisconnect(con)
+
+# TODO: Cross-references don't work with DT::datatable: https://github.com/quarto-dev/quarto-cli/discussions/6311
+# Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future
+
+# Show the first 8 rows + pagination
+DT::datatable(mostSuccessfulDevs, options = list(pageLength = 8))
 ```
