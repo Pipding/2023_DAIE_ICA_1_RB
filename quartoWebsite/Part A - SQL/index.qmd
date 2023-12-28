@@ -1,0 +1,48 @@
+---
+title: "Part A - SQL"
+execute:
+  echo: false
+---
+
+```{r Install dependencies}
+#| echo: false
+#| warning: false
+if(!require('tidyverse'))
+  packages.install('tidyverse')
+
+if(!require('RSQLite'))
+  packages.install('RSQLite')
+```
+
+`# TODO: Cross-references don't work with DT::datatable (source: https://github.com/quarto-dev/quarto-cli/discussions/6311). Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future`
+@tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country
+
+```{r}
+#| label: tbl-projectbudgetspercountry
+#| tbl-cap: Project count and budget per country
+#| echo: false
+#| warning: false
+#| cache: false
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+projectBudgets <- dbGetQuery(
+  con,
+  'SELECT
+      CustomerCountry AS Country,
+      SUM(Budget) AS \'TotalBudget\',
+      COUNT(ProjectID) AS "ProjectCount"
+  FROM Projects
+      JOIN Customers C ON
+          Projects.CustomerID = C.CustomerID
+  GROUP BY CustomerCountry
+  ORDER BY TotalBudget DESC;'
+  )
+
+dbDisconnect(con)
+
+# show the first 8 rows + pagination
+DT::datatable(projectBudgets, options = list(pageLength = 8))
+```

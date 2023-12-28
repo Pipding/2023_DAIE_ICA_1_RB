@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Part A - SQL",
+    "section": "",
+    "text": "# TODO: Cross-references don't work with DT::datatable (source: https://github.com/quarto-dev/quarto-cli/discussions/6311). Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future ?@tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country\n\n\n?(caption)"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  }
+]
