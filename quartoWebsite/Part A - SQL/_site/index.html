@@ -120,6 +120,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used" id="toc-list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used" class="nav-link" data-scroll-target="#list-the-average-development-time-for-projects-categorized-by-the-number-of-assets-used">2. List the average development time for projects, categorized by the number of assets used</a></li>
   <li><a href="#list-the-top-three-developers-based-on-the-number-of-successful-projects-theyve-been-involved-in.-display-the-results" id="toc-list-the-top-three-developers-based-on-the-number-of-successful-projects-theyve-been-involved-in.-display-the-results" class="nav-link" data-scroll-target="#list-the-top-three-developers-based-on-the-number-of-successful-projects-theyve-been-involved-in.-display-the-results">3. List the top three developers based on the number of successful projects they’ve been involved in. Display the results</a></li>
   </ul></li>
+  <li><a href="#general-sql-concepts" id="toc-general-sql-concepts" class="nav-link" data-scroll-target="#general-sql-concepts">General SQL Concepts</a>
+  <ul class="collapse">
+  <li><a href="#select-with-like-and-or" id="toc-select-with-like-and-or" class="nav-link" data-scroll-target="#select-with-like-and-or">1. SELECT with <em>LIKE</em> and <em>OR</em></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -189,6 +193,25 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="datatables html-widget html-fill-item" id="htmlwidget-c911b00dab6a15f4ac19" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-c911b00dab6a15f4ac19">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["Morgan Lee","Jordan Kim","Alice Johnson"],[2,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n      <th>SuccessfulProjects<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Name","targets":1},{"name":"SuccessfulProjects","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="general-sql-concepts" class="level1">
+<h1>General SQL Concepts</h1>
+<section id="select-with-like-and-or" class="level3">
+<h3 class="anchored" data-anchor-id="select-with-like-and-or">1. SELECT with <em>LIKE</em> and <em>OR</em></h3>
+<p><strong>?@tbl-mostexperiencesdesignersandengineers</strong> presents all developers with “designer” or “engineer” in their specialization, ordered by years of experience</p>
+<div id="tbl-mostexperiencesdesignersandengineers" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Years of experience amongst designers and engineers" data-hash="index_cache/html/tbl-mostexperiencesdesignersandengineers_5ed801a50a7824629fa35b787ba9067f">
+<div class="panel-caption table-caption">
+<p><strong>?(caption)</strong></p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-c4e5aeb0da0475b60b7f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c4e5aeb0da0475b60b7f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4"],["Dave Brown","Frank Miller","Henry Moore","Grace Wilson"],["Game Designer","Sound Engineer","UI/UX Designer","Level Designer"],[6,5,4,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n      <th>Specialization<\/th>\n      <th>ExperienceYears<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Name","targets":1},{"name":"Specialization","targets":2},{"name":"ExperienceYears","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>

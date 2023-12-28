@@ -138,3 +138,43 @@ dbDisconnect(con)
 # Show the first 8 rows + pagination
 DT::datatable(mostSuccessfulDevs, options = list(pageLength = 8))
 ```
+
+
+
+# General SQL Concepts
+
+### 1. SELECT with *LIKE* and *OR*
+
+@tbl-mostexperiencesdesignersandengineers presents all developers with "designer" or "engineer" in their specialization, ordered by years of experience
+
+```{r}
+#| label: tbl-mostexperiencesdesignersandengineers
+#| tbl-cap: Years of experience amongst designers and engineers
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+designersAndEngineersExperience <- dbGetQuery(
+  con,
+  'SELECT
+    Name, Specialization, ExperienceYears
+  FROM Developers
+  WHERE
+      LOWER(Specialization) LIKE \'%designer\'
+      OR
+      LOWER(Specialization) LIKE \'%engineer\'
+  ORDER BY ExperienceYears DESC;'
+)
+
+dbDisconnect(con)
+
+# TODO: Cross-references don't work with DT::datatable: https://github.com/quarto-dev/quarto-cli/discussions/6311
+# Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future
+
+# Show the first 8 rows + pagination
+DT::datatable(designersAndEngineersExperience, options = list(pageLength = 8))
+```
