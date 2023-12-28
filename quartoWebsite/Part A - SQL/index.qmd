@@ -1,0 +1,272 @@
+---
+title: "Part A - SQL"
+execute:
+  echo: false
+---
+
+```{r Install dependencies}
+#| echo: false
+#| warning: false
+if(!require('tidyverse'))
+  packages.install('tidyverse')
+
+if(!require('RSQLite'))
+  packages.install('RSQLite')
+```
+
+# Core SQL Queries
+
+### 1.   List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order
+
+@tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country
+
+```{r}
+#| label: tbl-projectbudgetspercountry
+#| tbl-cap: Project count and budget per country
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+projectBudgets <- dbGetQuery(
+  con,
+  'SELECT
+      CustomerCountry AS Country,
+      SUM(Budget) AS \'TotalBudget\',
+      COUNT(ProjectID) AS "ProjectCount"
+  FROM Projects
+      JOIN Customers C ON
+          Projects.CustomerID = C.CustomerID
+  GROUP BY CustomerCountry
+  ORDER BY TotalBudget DESC;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(projectBudgets) <= 7) {
+  knitr::kable(head(projectBudgets, 7), align='lcc')
+} else {
+  DT::datatable(projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+}
+```
+
+
+
+### 2. List the average development time for projects, categorized by the number of assets used
+
+@tbl-devtimebyassetsused presents the average development time for projects, grouped by the number of assets used
+
+```{r}
+#| label: tbl-devtimebyassetsused
+#| tbl-cap: Average development time for projects, grouped by # of assets used
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+avgDevTimeByAssetCount <- dbGetQuery(
+  con,
+  'SELECT
+      AVG(DaysTaken) AS AverageDevTime,
+      AssetCount
+  FROM (
+      SELECT
+          COUNT(AssetID) AS AssetCount,
+          (JULIANDAY(EndDate) - JULIANDAY(StartDate)) AS DaysTaken
+      FROM Projects
+          LEFT JOIN Assets A ON
+              Projects.ProjectID = A.ProjectID
+      GROUP BY Projects.ProjectID
+  )
+  GROUP BY AssetCount;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(avgDevTimeByAssetCount) <= 7) {
+  knitr::kable(head(avgDevTimeByAssetCount, 7), align='c')
+} else {
+  DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 0:2))))
+}
+```
+
+
+
+### 3. List the top three developers based on the number of successful projects they’ve been involved in. Display the results
+
+@tbl-mostsuccessfuldevs presents the 3 developers with the highest number of completed projects
+
+```{r}
+#| label: tbl-mostsuccessfuldevs
+#| tbl-cap: Developers with the highest number of successful projects
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+mostSuccessfulDevs <- dbGetQuery(
+  con,
+  'SELECT
+      Name,
+      COUNT(ProjectDevelopers.ProjectID) AS SuccessfulProjects
+  FROM ProjectDevelopers
+      LEFT JOIN Projects P ON
+          ProjectDevelopers.ProjectID = P.ProjectID
+      JOIN Developers D ON
+          ProjectDevelopers.DeveloperID = D.DeveloperID
+  WHERE
+      Status IS \'Completed\'
+  GROUP BY D.DeveloperID
+  ORDER BY SuccessfulProjects DESC
+  LIMIT 3;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(mostSuccessfulDevs) <= 7) {
+  knitr::kable(head(mostSuccessfulDevs, 7), align='lc')
+} else {
+  DT::datatable(mostSuccessfulDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2))))
+}
+```
+
+
+
+# General SQL Concepts
+
+### 1. SELECT with **LIKE** and **OR**
+
+@tbl-mostexperiencesdesignersandengineers presents all developers with "designer" or "engineer" in their specialization, ordered by years of experience
+
+```{r}
+#| label: tbl-mostexperiencesdesignersandengineers
+#| tbl-cap: Years of experience amongst designers and engineers
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+designersAndEngineersExperience <- dbGetQuery(
+  con,
+  'SELECT
+    Name, Specialization, ExperienceYears
+  FROM Developers
+  WHERE
+      LOWER(Specialization) LIKE \'%designer\'
+      OR
+      LOWER(Specialization) LIKE \'%engineer\'
+  ORDER BY ExperienceYears DESC;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(designersAndEngineersExperience) <= 7) {
+  knitr::kable(head(designersAndEngineersExperience, 7), align = 'lcc')
+} else {
+  DT::datatable(designersAndEngineersExperience, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+}
+```
+
+
+
+### 2. *SELECT* with **DISTINCT** and **ORDER BY**
+
+@tbl-projectleads presents the names of all project leads
+
+```{r}
+#| label: tbl-projectleads
+#| tbl-cap: Project leads
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+projectLeads <- dbGetQuery(
+  con,
+  'SELECT DISTINCT Name
+  FROM Developers
+      JOIN ProjectDevelopers PD ON Developers.DeveloperID = PD.DeveloperID
+      JOIN Projects P ON PD.ProjectID = P.ProjectID
+  WHERE
+      LOWER(Role) IS \'lead\'
+  ORDER BY Name ASC;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(projectLeads) <= 7) {
+  knitr::kable(head(projectLeads, 7), align = 'c')
+} else {
+  DT::datatable(projectLeads, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 1))))
+}
+```
+
+
+
+### 3. Subquery with **SELECT**
+
+@tbl-multiprojectdevs presents the names and specializations of all developers who have worked on more than 1 project
+
+```{r}
+#| label: tbl-multiprojectdevs
+#| tbl-cap: Developers with experience on more than one project
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+# The subquery is justified here because the WHERE condition acts on the 
+# computed ProjectCount, which is an aggregate call. This isn't allowed in
+# SQLite so a subquery is required
+
+multiProjectDevs <- dbGetQuery(
+  con,
+  'SELECT
+      Name,
+      Specialization,
+      ProjectCount
+  FROM (
+      SELECT
+          Name,
+          Specialization,
+          COUNT(ProjectID) AS ProjectCount
+      FROM ProjectDevelopers
+      JOIN Developers D on D.DeveloperID = ProjectDevelopers.DeveloperID
+      GROUP BY D.DeveloperID
+  )
+  WHERE ProjectCount > 1
+  ORDER BY ProjectCount DESC;'
+)
+
+dbDisconnect(con)
+
+# Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
+if(nrow(multiProjectDevs) <= 7) {
+  knitr::kable(head(multiProjectDevs, 7), align = 'lcc')
+} else {
+  DT::datatable(multiProjectDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+}
+```
