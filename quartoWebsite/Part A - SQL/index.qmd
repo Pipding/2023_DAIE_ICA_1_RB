@@ -14,7 +14,6 @@ if(!require('RSQLite'))
   packages.install('RSQLite')
 ```
 
-`# TODO: Cross-references don't work with DT::datatable (source: https://github.com/quarto-dev/quarto-cli/discussions/6311). Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future`
 @tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country
 
 ```{r}
@@ -43,6 +42,9 @@ projectBudgets <- dbGetQuery(
 
 dbDisconnect(con)
 
-# show the first 8 rows + pagination
+# TODO: Cross-references don't work with DT::datatable: https://github.com/quarto-dev/quarto-cli/discussions/6311
+# Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future
+
+# Show the first 8 rows + pagination
 DT::datatable(projectBudgets, options = list(pageLength = 8))
 ```
