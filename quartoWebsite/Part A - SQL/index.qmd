@@ -215,3 +215,48 @@ dbDisconnect(con)
 # Show the first 8 rows + pagination
 DT::datatable(projectLeads, options = list(pageLength = 8))
 ```
+
+
+
+### 3. Subquery with *SELECT*
+
+@tbl-multiprojectdevs presents the names and specializations of all developers who have worked on more than 1 project
+
+```{r}
+#| label: tbl-multiprojectdevs
+#| tbl-cap: Developers with experience on more than one project
+#| echo: false
+#| warning: false
+#| cache: true
+library("RSQLite")
+
+## connect to db
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
+
+multiProjectDevs <- dbGetQuery(
+  con,
+  'SELECT
+      Name,
+      Specialization,
+      ProjectCount
+  FROM (
+      SELECT
+          Name,
+          Specialization,
+          COUNT(ProjectID) AS ProjectCount
+      FROM ProjectDevelopers
+      JOIN Developers D on D.DeveloperID = ProjectDevelopers.DeveloperID
+      GROUP BY D.DeveloperID
+  )
+  WHERE ProjectCount > 1
+  ORDER BY ProjectCount DESC;'
+)
+
+dbDisconnect(con)
+
+# TODO: Cross-references don't work with DT::datatable: https://github.com/quarto-dev/quarto-cli/discussions/6311
+# Decide whether to implement a workaround or leave it as-is and hope an update to Quarto fixes it at some point in the future
+
+# Show the first 8 rows + pagination
+DT::datatable(multiProjectDevs, options = list(pageLength = 8))
+```

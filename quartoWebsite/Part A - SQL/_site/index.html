@@ -124,6 +124,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#select-with-like-and-or" id="toc-select-with-like-and-or" class="nav-link" data-scroll-target="#select-with-like-and-or">1. SELECT with <em>LIKE</em> and <em>OR</em></a></li>
   <li><a href="#select-with-distinct-and-order-by" id="toc-select-with-distinct-and-order-by" class="nav-link" data-scroll-target="#select-with-distinct-and-order-by">2. <em>SELECT</em> with <em>DISTINCT</em> and <em>ORDER BY</em></a></li>
+  <li><a href="#subquery-with-select" id="toc-subquery-with-select" class="nav-link" data-scroll-target="#subquery-with-select">3. Subquery with <em>SELECT</em></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -229,6 +230,22 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="datatables html-widget html-fill-item" id="htmlwidget-7d8bca58686e55691e68" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-7d8bca58686e55691e68">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4"],["Alice Johnson","Jordan Kim","Karen Garcia","Morgan Lee"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Name","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</section>
+<section id="subquery-with-select" class="level3">
+<h3 class="anchored" data-anchor-id="subquery-with-select">3. Subquery with <em>SELECT</em></h3>
+<p><strong>?@tbl-multiprojectdevs</strong> presents the names and specializations of all developers who have worked on more than 1 project</p>
+<div id="tbl-multiprojectdevs" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="Developers with experience on more than one project" data-hash="index_cache/html/tbl-multiprojectdevs_cf4e33a8e700b0d5faff2c686dcc9d6f">
+<div class="panel-caption table-caption">
+<p><strong>?(caption)</strong></p>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-8897983e80ea80805e28" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8897983e80ea80805e28">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["Jordan Kim","Karen Garcia","Morgan Lee"],["Project Manager","Producer","Project Manager"],[3,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n      <th>Specialization<\/th>\n      <th>ProjectCount<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Name","targets":1},{"name":"Specialization","targets":2},{"name":"ProjectCount","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
