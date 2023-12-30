@@ -106,3 +106,19 @@ FROM (
 )
 WHERE ProjectCount > 1
 ORDER BY ProjectCount DESC;
+
+
+
+
+
+-- Other queries
+
+-- Get the number of devs on each project (including assets)
+SELECT
+    Projects.ProjectID,
+    Count(DISTINCT A.AssetID) AS AssetCount,
+    Count(DISTINCT DeveloperID) AS DevCount
+FROM Projects
+    LEFT JOIN Assets A on Projects.ProjectID = A.ProjectID
+    LEFT JOIN AssetsDevelopers AD on A.AssetID = AD.AssetID
+GROUP BY Projects.ProjectID;
