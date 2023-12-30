@@ -16,7 +16,7 @@ if(!require('RSQLite'))
 
 # Core SQL Queries
 
-### 1.   List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order
+### 1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order
 
 @tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country
 
@@ -54,15 +54,13 @@ if(nrow(projectBudgets) <= 7) {
 }
 ```
 
-
-
 ### 2. List the average development time for projects, categorized by the number of assets used
 
 @tbl-devtimebyassetsused presents the average development time for projects, grouped by the number of assets used
 
 ```{r}
 #| label: tbl-devtimebyassetsused
-#| tbl-cap: Average development time for projects, grouped by # of assets used
+#| tbl-cap: Average development time for projects, grouped by number of assets used
 #| echo: false
 #| warning: false
 #| cache: true
@@ -98,9 +96,7 @@ if(nrow(avgDevTimeByAssetCount) <= 7) {
 }
 ```
 
-
-
-### 3. List the top three developers based on the number of successful projects they’ve been involved in. Display the results
+### 3. List the top three developers based on the number of successful projects they've been involved in. Display the results
 
 @tbl-mostsuccessfuldevs presents the 3 developers with the highest number of completed projects
 
@@ -142,8 +138,6 @@ if(nrow(mostSuccessfulDevs) <= 7) {
 }
 ```
 
-
-
 # General SQL Concepts
 
 ### 1. SELECT with **LIKE** and **OR**
@@ -183,8 +177,6 @@ if(nrow(designersAndEngineersExperience) <= 7) {
 }
 ```
 
-
-
 ### 2. *SELECT* with **DISTINCT** and **ORDER BY**
 
 @tbl-projectleads presents the names of all project leads
@@ -220,8 +212,6 @@ if(nrow(projectLeads) <= 7) {
   DT::datatable(projectLeads, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 1))))
 }
 ```
-
-
 
 ### 3. Subquery with **SELECT**
 
