@@ -1,3 +1,8 @@
+/**
+    This is a scratch file for putting together SQL queries
+ */
+
+
 -- First, you are required to write three core SQL queries to perform the following tasks:
 
 -- 1.   List the total budget allocated for projects in each country, along with the count of projects per country.
