@@ -12,6 +12,9 @@ if(!require('tidyverse'))
 
 if(!require('RSQLite'))
   packages.install('RSQLite')
+
+if(!require('dplyr'))
+  packages.install('dplyr')
 ```
 
 # Core SQL Queries
