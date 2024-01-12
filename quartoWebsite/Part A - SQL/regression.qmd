@@ -84,7 +84,7 @@ correlation coefficient of `r cor.test(completedProjects$Budget, completedProjec
 <br>
 Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with budget.
 
-@fig-budgetvsteamsize plots the budgets of completed projects against the size of their dev team. Overlayed, a linear regression shows the relationship between team size and budget
+@fig-budgetvsteamsize plots the budgets of completed projects against the size of their dev team. Overlaid, a linear regression shows the relationship between team size and budget. 
 
 ```{r Plot budget of completed projects against dev team size}
 #| label: fig-budgetvsteamsize
@@ -116,7 +116,7 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Budget)) +
 ggplotly(p)
 ```
 
-The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. This suggests it's common for a developer to work on more than one asset per project. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget.
+The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. This suggests it's common for a developer to work on more than one asset per project. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget. @fig-assetsvsteamsize shows this correlation.
 
 ```{r Plot number of assets in a project against number of asset developers}
 #| label: fig-assetsvsteamsize
@@ -129,7 +129,25 @@ The relationship between the number of developers and the number of assets in a 
 library(ggplot2)
 library(scales)
 
-plot(completedProjects$AssetDevCount, completedProjects$AssetCount)
+p <- ggplot(completedProjects, aes(AssetDevCount, AssetCount)) + 
+      geom_point() +
+      xlab("Dev team size") +
+      ylab("Asset count") +
+      scale_y_continuous(breaks =
+                           seq(
+                             1,
+                             max(completedProjects$AssetCount),
+                             by = 1)
+                         ) + 
+      scale_x_continuous(breaks = 
+                           seq(
+                             1,
+                             max(completedProjects$AssetDevCount),
+                             by = 1)
+                         ) + 
+      geom_smooth(formula = y ~ x, method = "lm")
+
+ggplotly(p)
 ```
 
 We can measure how the above factors influence the likelihood of project success by analysing them in relationship to a 'success' metric - namely, the number of milestones a project has missed. Taking into account projects which have not yet been completed, `r nrow(subset(projectsOverview, MissedMilestone==TRUE))`/`r length(projectsOverview)` projects missed a milestone.
