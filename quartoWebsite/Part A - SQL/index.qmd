@@ -18,6 +18,9 @@ if(!require('dplyr'))
 
 if(!require('formattable'))
   packages.install('formattable')
+
+if(!require('scales'))
+  packages.install('scales')
 ```
 
 # Core SQL Queries
