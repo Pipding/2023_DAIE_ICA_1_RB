@@ -1,3 +1,8 @@
+/**
+    This is a scratch file for putting together SQL queries
+ */
+
+
 -- First, you are required to write three core SQL queries to perform the following tasks:
 
 -- 1.   List the total budget allocated for projects in each country, along with the count of projects per country.
@@ -106,3 +111,57 @@ FROM (
 )
 WHERE ProjectCount > 1
 ORDER BY ProjectCount DESC;
+
+
+
+
+
+-- Other queries
+
+-- Get the number of devs on each project (including assets)
+SELECT
+    Projects.ProjectID,
+    Count(DISTINCT A.AssetID) AS AssetCount,
+    Count(DISTINCT DeveloperID) AS DevCount
+FROM Projects
+    LEFT JOIN Assets A on Projects.ProjectID = A.ProjectID
+    LEFT JOIN AssetsDevelopers AD on A.AssetID = AD.AssetID
+GROUP BY Projects.ProjectID;
+
+
+/* Get the following details of all projects;
+   - Name
+   - Lead developer
+   - Budget
+   - Whether the project has started (bool)
+   - Whether the project has been completed (bool)
+   - Number of assets used in the project
+   - Number of developers who worked on the project
+   - Whether the project missed any milestones (bool)
+*/
+
+SELECT
+    ProjectName,
+    Name AS ProjectLead,
+    Budget,
+    JULIANDAY(StartDate) < JULIANDAY(DATE('now')) AS Started,
+    JULIANDAY(EndDate) < JULIANDAY(DATE('now')) AS Completed,
+    Count(DISTINCT A.AssetID) AS AssetCount,
+    Count(DISTINCT AD.DeveloperID) AS AssetDevCount,
+    CASE
+        WHEN
+            JULIANDAY(ExpectedCompletionDate) < JULIANDAY(DATE(ActualCompletionDate))
+            OR
+            JULIANDAY(ExpectedCompletionDate) < JULIANDAY(DATE('now')) AND ActualCompletionDate IS NULL
+        THEN
+            TRUE
+        ELSE
+            FALSE
+        END AS MissedMilestone
+FROM Projects
+    LEFT JOIN Assets A on Projects.ProjectID = A.ProjectID
+    LEFT JOIN AssetsDevelopers AD on A.AssetID = AD.AssetID
+    JOIN ProjectDevelopers PD on Projects.ProjectID = PD.ProjectID
+    JOIN Developers D on D.DeveloperID = PD.DeveloperID
+    LEFT JOIN Timelines T on Projects.ProjectID = T.ProjectID
+GROUP BY Projects.ProjectID;
