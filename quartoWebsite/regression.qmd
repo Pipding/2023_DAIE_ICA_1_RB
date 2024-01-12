@@ -74,17 +74,11 @@ completedProjects <- projectsOverview %>%
 
 # Linear regression
 
-Only completed projects are taken into account when performing linear regression as
-data about incomplete projects are subject to change.
+Only completed projects are taken into account when performing linear regression as data about incomplete projects are subject to change.
 
 ## Budget, team size and asset count
 
-The total budget of completed projects appears to have no correlation to the number of assets in the project, with a
-correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`.
-<br>
-Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with budget.
-
-@fig-budgetvsteamsize plots the budgets of completed projects against the size of their dev team. Overlaid, a linear regression shows the relationship between team size and budget. 
+The total budget of completed projects appears to have no correlation to the number of assets in the project, with a correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`. <br> Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with budget. @fig-budgetvsteamsize plots the budgets of completed projects against the size of their dev team. The overlaid linear regression shows the relationship between team size and budget.
 
 ```{r Plot budget of completed projects against dev team size}
 #| label: fig-budgetvsteamsize
@@ -116,9 +110,7 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Budget)) +
 ggplotly(p)
 ```
 
-The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. If each developer worked on the same number of assets per project, we would expect these figures to be strongly correlated. The weak correlation therefore suggests that the workload, as measured by the number of assets worked on, is not evenly divided among developers. 
-This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget.
-@fig-assetsvsteamsize shows the correlation between dev team size and asset count
+The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. If each developer worked on the same number of assets per project, we would expect these figures to be strongly correlated. The weak correlation therefore suggests that the workload, as measured by the number of assets worked on, is not evenly divided among developers. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget. @fig-assetsvsteamsize shows the correlation between dev team size and asset count.
 
 ```{r Plot number of assets in a project against number of asset developers}
 #| label: fig-assetsvsteamsize
