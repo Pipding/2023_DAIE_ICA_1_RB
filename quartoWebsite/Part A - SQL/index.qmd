@@ -1,5 +1,5 @@
 ---
-title: "Part A - SQL"
+title: "Part A"
 execute:
   echo: false
 ---
@@ -15,9 +15,13 @@ if(!require('RSQLite'))
 
 if(!require('dplyr'))
   packages.install('dplyr')
+
+if(!require('formattable'))
+  packages.install('formattable')
 ```
 
 # Core SQL Queries
+
 
 ### 1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order
 
@@ -29,7 +33,8 @@ if(!require('dplyr'))
 #| echo: false
 #| warning: false
 #| cache: true
-library("RSQLite")
+library(RSQLite)
+library(formattable)
 
 ## connect to db
 con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
@@ -38,24 +43,30 @@ projectBudgets <- dbGetQuery(
   con,
   'SELECT
       CustomerCountry AS Country,
-      SUM(Budget) AS \'TotalBudget\',
-      COUNT(ProjectID) AS "ProjectCount"
+      SUM(Budget) AS Budget,
+      COUNT(ProjectID) AS \'Project Count\'
   FROM Projects
       JOIN Customers C ON
           Projects.CustomerID = C.CustomerID
   GROUP BY CustomerCountry
-  ORDER BY TotalBudget DESC;'
+  ORDER BY Budget DESC;'
 )
 
 dbDisconnect(con)
+
+# Currency isn't explicitly mentioned in the brief. Assuming euro based on locations of customers
+projectBudgets$Budget <- currency(projectBudgets$Budget, digits = 0L, "€")
 
 # Show up to 7 rows. If data has more than 7 entries, show the first 8 with pagination
 if(nrow(projectBudgets) <= 7) {
   knitr::kable(head(projectBudgets, 7), align='lcc')
 } else {
-  DT::datatable(projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+  DT::datatable(
+    projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
 }
 ```
+
+<br>
 
 ### 2. List the average development time for projects, categorized by the number of assets used
 
@@ -75,8 +86,8 @@ con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
 avgDevTimeByAssetCount <- dbGetQuery(
   con,
   'SELECT
-      AVG(DaysTaken) AS AverageDevTime,
-      AssetCount
+      AVG(DaysTaken) AS \'Average Dev Time (days)\',
+      AssetCount AS \'Asset Count\'
   FROM (
       SELECT
           COUNT(AssetID) AS AssetCount,
@@ -99,6 +110,8 @@ if(nrow(avgDevTimeByAssetCount) <= 7) {
 }
 ```
 
+<br>
+
 ### 3. List the top three developers based on the number of successful projects they've been involved in. Display the results
 
 @tbl-mostsuccessfuldevs presents the 3 developers with the highest number of completed projects
@@ -118,7 +131,7 @@ mostSuccessfulDevs <- dbGetQuery(
   con,
   'SELECT
       Name,
-      COUNT(ProjectDevelopers.ProjectID) AS SuccessfulProjects
+      COUNT(ProjectDevelopers.ProjectID) AS \'Completed Projects\'
   FROM ProjectDevelopers
       LEFT JOIN Projects P ON
           ProjectDevelopers.ProjectID = P.ProjectID
@@ -127,7 +140,7 @@ mostSuccessfulDevs <- dbGetQuery(
   WHERE
       Status IS \'Completed\'
   GROUP BY D.DeveloperID
-  ORDER BY SuccessfulProjects DESC
+  ORDER BY COUNT(ProjectDevelopers.ProjectID) DESC
   LIMIT 3;'
 )
 
@@ -141,9 +154,12 @@ if(nrow(mostSuccessfulDevs) <= 7) {
 }
 ```
 
+<br>
+<br>
+
 # General SQL Concepts
 
-### 1. SELECT with **LIKE** and **OR**
+### 1. **SELECT** with **LIKE** and **OR**
 
 @tbl-mostexperiencesdesignersandengineers presents all developers with "designer" or "engineer" in their specialization, ordered by years of experience
 
@@ -161,13 +177,13 @@ con <- dbConnect(drv=RSQLite::SQLite(), dbname="ICA_2023.sqlite")
 designersAndEngineersExperience <- dbGetQuery(
   con,
   'SELECT
-    Name, Specialization, ExperienceYears
+    Name, Specialization, ExperienceYears AS \'Years of experience\'
   FROM Developers
   WHERE
       LOWER(Specialization) LIKE \'%designer\'
       OR
       LOWER(Specialization) LIKE \'%engineer\'
-  ORDER BY ExperienceYears DESC;'
+  ORDER BY \'Years of experience\' DESC;'
 )
 
 dbDisconnect(con)
@@ -180,7 +196,9 @@ if(nrow(designersAndEngineersExperience) <= 7) {
 }
 ```
 
-### 2. *SELECT* with **DISTINCT** and **ORDER BY**
+<br>
+
+### 2. **SELECT** with **DISTINCT** and **ORDER BY**
 
 @tbl-projectleads presents the names of all project leads
 
@@ -216,6 +234,8 @@ if(nrow(projectLeads) <= 7) {
 }
 ```
 
+<br>
+
 ### 3. Subquery with **SELECT**
 
 @tbl-multiprojectdevs presents the names and specializations of all developers who have worked on more than 1 project
@@ -240,7 +260,7 @@ multiProjectDevs <- dbGetQuery(
   'SELECT
       Name,
       Specialization,
-      ProjectCount
+      ProjectCount AS \'Project Count\'
   FROM (
       SELECT
           Name,
