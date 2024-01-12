@@ -77,15 +77,33 @@ completedProjects <- projectsOverview %>%
 Only completed projects are taken into account when performing linear regression as
 data about incomplete projects are subject to change.
 
+## Budget, team size and asset count
+
 The total budget of completed projects appears to have no correlation to the number of assets in the project, with a
 correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`.
 <br>
-Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with project budget.
+Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with budget.
 
-```{r Plot budget of completed projects against developer count}
+@fig-budgetsvsteamsize plots the budgets of completed projects against the size of their dev team. Overlayed, a linear regression shows the relationship between team size and budget
+
+```{r Plot budget of completed projects against dev team size}
+#| label: fig-budgetsvsteamsize
+#| fig-cap: Linear regression of dev team size vs. budget for completed projects
 #| echo: true
 #| code-fold: true
-plot(completedProjects$AssetDevCount, completedProjects$Budget)
+
+library(ggplot2)
+library(scales)
+
+# Currency function for the Y axis: https://www.rdocumentation.org/packages/scales/versions/0.3.0/topics/dollar_format
+# Adding the regression: https://community.rstudio.com/t/insert-regression-model-into-ggplot2/2439
+ggplot(completedProjects, aes(AssetDevCount, Budget)) + 
+  geom_point() +
+  xlab("Dev team size") +
+  ylab("Budget") +
+  scale_y_continuous(labels = dollar_format(prefix = "€", scale = 0.001, suffix = "k")) + 
+  scale_x_continuous(breaks = seq(min(completedProjects$AssetDevCount), max(completedProjects$AssetDevCount), by = 1)) + 
+  geom_smooth(formula = y ~ x, method = "lm")
 ```
 
 The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. This suggests it's common for a developer to work on more than one asset per project. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget.
