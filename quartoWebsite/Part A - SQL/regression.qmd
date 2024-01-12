@@ -116,7 +116,9 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Budget)) +
 ggplotly(p)
 ```
 
-The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. This suggests it's common for a developer to work on more than one asset per project. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget. @fig-assetsvsteamsize shows this correlation.
+The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. If each developer worked on the same number of assets per project, we would expect these figures to be strongly correlated. The weak correlation therefore suggests that the workload, as measured by the number of assets worked on, is not evenly divided among developers. 
+This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget.
+@fig-assetsvsteamsize shows the correlation between dev team size and asset count
 
 ```{r Plot number of assets in a project against number of asset developers}
 #| label: fig-assetsvsteamsize
