@@ -2,14 +2,15 @@
 title: "Linear Regression"
 ---
 
-This is where the linear regression goes
+# Projects overview
 
 @tbl-projectsoverview shows an overview of all projects
 
 ```{r}
 #| label: tbl-projectsoverview
 #| tbl-cap: Project count and budget per country
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
@@ -69,25 +70,38 @@ completedProjects <- projectsOverview %>%
   filter(Completed == TRUE)
 ```
 
-Only completed projects are taken into account when performing linear regression.
-Data about incomplete projects are subject to change.
+<br>
+
+# Linear regression
+
+Only completed projects are taken into account when performing linear regression as
+data about incomplete projects are subject to change.
 
 The total budget of completed projects appears to have no correlation to the number of assets in the project, with a
-correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`. Predictably, team size has a moderate-to-strong positive correlation ( correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with project budget.
+correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`.
+<br>
+Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with project budget.
 
 ```{r Plot budget of completed projects against developer count}
+#| echo: true
+#| code-fold: true
 plot(completedProjects$AssetDevCount, completedProjects$Budget)
 ```
 
 The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. This suggests it's common for a developer to work on more than one asset per project. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget.
 
 ```{r Plot number of assets in a project against number of asset developers}
+#| echo: true
+#| code-fold: true
 plot(completedProjects$AssetDevCount, completedProjects$AssetCount)
 ```
 
 We can measure how the above factors influence the likelihood of project success by analysing them in relationship to a 'success' metric - namely, the number of milestones a project has missed. Taking into account projects which have not yet been completed, `r nrow(subset(projectsOverview, MissedMilestone==TRUE))`/`r length(projectsOverview)` projects missed a milestone.
 
 ```{r}
+#| echo: true
+#| code-fold: true
+
 #projectsOverview=as.factor(projectsOverview$MissedMilestone)
 #lm(as.factor(MissedMilestone)~Budget, data = projectsOverview)
 
