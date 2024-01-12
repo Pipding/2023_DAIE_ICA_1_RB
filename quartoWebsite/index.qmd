@@ -29,7 +29,6 @@ if(!require('scales'))
 
 # Core SQL Queries
 
-
 ### 1. List the total budget allocated for projects in each country, along with the count of projects per country. Display sorted by the total budget in descending order
 
 @tbl-projectbudgetspercountry presents the total budget allocated for projects in each country, along with the number of projects per country
@@ -164,8 +163,7 @@ if(nrow(mostSuccessfulDevs) <= 7) {
 }
 ```
 
-<br>
-<br>
+<br> <br>
 
 # General SQL Concepts
 
