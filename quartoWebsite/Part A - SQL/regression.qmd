@@ -8,7 +8,7 @@ title: "Linear Regression"
 
 ```{r}
 #| label: tbl-projectsoverview
-#| tbl-cap: Project count and budget per country
+#| tbl-cap: Overview of all projects
 #| echo: true
 #| code-fold: true
 #| warning: false
