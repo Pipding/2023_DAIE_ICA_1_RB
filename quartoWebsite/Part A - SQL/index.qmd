@@ -30,7 +30,8 @@ if(!require('formattable'))
 ```{r}
 #| label: tbl-projectbudgetspercountry
 #| tbl-cap: Project count and budget per country
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library(RSQLite)
@@ -75,7 +76,8 @@ if(nrow(projectBudgets) <= 7) {
 ```{r}
 #| label: tbl-devtimebyassetsused
 #| tbl-cap: Average development time for projects, grouped by number of assets used
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
@@ -119,7 +121,8 @@ if(nrow(avgDevTimeByAssetCount) <= 7) {
 ```{r}
 #| label: tbl-mostsuccessfuldevs
 #| tbl-cap: Developers with the highest number of successful projects
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
@@ -166,7 +169,8 @@ if(nrow(mostSuccessfulDevs) <= 7) {
 ```{r}
 #| label: tbl-mostexperiencesdesignersandengineers
 #| tbl-cap: Years of experience amongst designers and engineers
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
@@ -205,7 +209,8 @@ if(nrow(designersAndEngineersExperience) <= 7) {
 ```{r}
 #| label: tbl-projectleads
 #| tbl-cap: Project leads
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
@@ -243,7 +248,8 @@ if(nrow(projectLeads) <= 7) {
 ```{r}
 #| label: tbl-multiprojectdevs
 #| tbl-cap: Developers with experience on more than one project
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| warning: false
 #| cache: true
 library("RSQLite")
