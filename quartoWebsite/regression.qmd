@@ -206,7 +206,7 @@ p <- ggplot(completedProjects, aes(Budget, Duration)) +
 ggplotly(p)
 ```
 
-A possible explanation for the inverse relationship between project budget and duration is the size of the dev team on a project. As explored in @fig-budgetvsteamsize, project budget is highly correlated with the number of developers working on the project. Developer count is also highly negatively correlated with project duration (correlation coefficient `r cor.test(completedProjects$AssetDevCount, completedProjects$Duration)$estimate`), as shown in @fig-projectdurationteamsize.
+A possible explanation for the inverse relationship between project budget and duration is the size of the dev team on a project. As explored in @fig-budgetvsteamsize, project budget is highly correlated with the number of developers working on the project. @fig-projectdurationteamsize show the highly-negative correlation between dev team size and project duration (correlation coefficient `r cor.test(completedProjects$AssetDevCount, completedProjects$Duration)$estimate`).
 
 ```{r Plot project duration against dev team size}
 #| label: fig-projectdurationteamsize
@@ -234,4 +234,8 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Duration)) +
 
 ggplotly(p)
 ```
+
+Together, these data suggest that dev team size is a key determining factor of both the budget and duration of a project.
+
+# Summary of findings
 
