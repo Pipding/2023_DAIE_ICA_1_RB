@@ -151,7 +151,7 @@ Of the `r nrow(completedProjects)` completed projects, `r nrow(subset(completedP
 
 `r nrow(startedProjects)` projects have been started, of which `r `nrow(completedProjects)` have been completed. `r nrow(subset(startedProjects, MissedMilestone==TRUE))`/`r nrow(startedProjects)` of these projects missed a milestone.
 
-By plotting both budget and dev count, we can visualize which of these factors contributes more heavily to the likelihood of missing a milestone.
+By plotting both budget and dev count, we can visualize which of these factors contributes more heavily to the likelihood of missing a milestone. @fig-missedmilestoneregression shows this plot.
 
 ```{r Determining the likelihood of a project missing a milestone given budget & team size}
 #| label: fig-missedmilestoneregression
@@ -161,17 +161,17 @@ By plotting both budget and dev count, we can visualize which of these factors c
 #| warning: false
 #| cache: true
 
-multilinearModel <- lm(MissedMilestone ~ Budget + AssetDevCount, data = startedProjects)
+p <- ggplot(
+  startedProjects,
+  aes(
+    x=Budget,
+    y=AssetDevCount,
+    shape=MissedMilestone)
+  ) +
+  geom_point()
 
-
-ggplt <- ggplot(startedProjects,aes(x=Budget,y=AssetDevCount,shape=MissedMilestone))+ 
-         geom_point()
-
-ggplotly(ggplt)
-  
-# Plotting a single Regression Line 
-ggplt+geom_smooth(method=lm,se=FALSE,fullrange=TRUE) 
-
-
-
+ggplotly(p)
 ```
+
+This plot reveals the number of developers assigned to a project has an outsized impact on the likelihood of missing a milestone and suggests that a lower dev team size is a contributing factor to the likelihood of a project missing a milestone.
+
