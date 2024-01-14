@@ -117,7 +117,7 @@ The relationship between the number of developers and the number of assets in a 
 
 ```{r Plot number of assets in a project against number of asset developers}
 #| label: fig-assetsvsteamsize
-#| fig-cap: Linear regression of dev team size vs. budget for completed projects
+#| fig-cap: Linear regression of dev team size vs. number of assets in a project
 #| echo: true
 #| code-fold: true
 #| warning: false
@@ -147,7 +147,11 @@ p <- ggplot(completedProjects, aes(AssetDevCount, AssetCount)) +
 ggplotly(p)
 ```
 
-We can measure how the above factors influence the likelihood of project success by analysing them in relationship to a 'success' metric - namely, the number of milestones a project has missed. Taking into account projects which have not yet been completed, `r nrow(subset(projectsOverview, MissedMilestone==TRUE))`/`r length(projectsOverview)` projects missed a milestone.
+Of the `r nrow(completedProjects)` completed projects, `r nrow(subset(completedProjects, MissedMilestone==TRUE))` missed a milestone. Taking our findings above into account, we can expand our scope to include projects which have been started but not yet finished.
+
+`r nrow(startedProjects)` projects have been started, of which `r `nrow(completedProjects)` have been completed. `r nrow(subset(startedProjects, MissedMilestone==TRUE))`/`r nrow(startedProjects)` of these projects missed a milestone.
+
+By plotting both budget and dev count, we can visualize which of these factors contributes more heavily to the likelihood of missing a milestone.
 
 ```{r Determining the likelihood of a project missing a milestone given budget & team size}
 #| label: fig-missedmilestoneregression
@@ -157,36 +161,17 @@ We can measure how the above factors influence the likelihood of project success
 #| warning: false
 #| cache: true
 
-# Generate a model which will be used to make predictions about the likelihood of missing milestones
-model <- glm(MissedMilestone ~ Budget + AssetDevCount, family = binomial(link = "logit"), data = startedProjects)
+multilinearModel <- lm(MissedMilestone ~ Budget + AssetDevCount, data = startedProjects)
 
-projectOutcomeMatrix <- expand.grid(
-  Budget = seq(
-    min(startedProjects$Budget),
-    max(startedProjects$Budget),
-    length.out = 100),
-  AssetDevCount = seq(
-    min(startedProjects$AssetDevCount),
-    max(startedProjects$AssetDevCount),
-    length.out = 100)
-  )
 
-# Prediction: https://www.digitalocean.com/community/tutorials/predict-function-in-r
-projectOutcomeMatrix$predictedMilestoneMisses <- predict(model, newdata = projectOutcomeMatrix, type = "response")
+ggplt <- ggplot(startedProjects,aes(x=Budget,y=AssetDevCount,shape=MissedMilestone))+ 
+         geom_point()
 
-# Combine real data with predicted data
-predictionsMerged <- cbind(startedProjects, predictedProbabilities = predict(model, type = "response"))
+ggplotly(ggplt)
+  
+# Plotting a single Regression Line 
+ggplt+geom_smooth(method=lm,se=FALSE,fullrange=TRUE) 
 
-p <- ggplot(
-  predictionsMerged,
-  aes(x = Budget, y = AssetDevCount, color = predictedProbabilities)) +
-  geom_point(aes(shape = MissedMilestone), size = 3) +
-  scale_color_gradient(low = "blue", high = "red") +
-  labs(
-    x = "Budget",
-    y = "Dev Team Size",
-    color = "Predicted Probability",
-    shape = "Missed Milestone")
 
-ggplotly(p)
+
 ```
