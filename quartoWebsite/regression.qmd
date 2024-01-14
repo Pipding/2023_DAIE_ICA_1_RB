@@ -27,6 +27,7 @@ projectsOverview <- dbGetQuery(
       Budget,
       JULIANDAY(StartDate) < JULIANDAY(DATE(\'now\')) AS Started,
       JULIANDAY(EndDate) < JULIANDAY(DATE(\'now\')) AS Completed,
+      JULIANDAY(EndDate) - JULIANDAY(StartDate) AS Duration,
       Count(DISTINCT A.AssetID) AS AssetCount,
       Count(DISTINCT AD.DeveloperID) AS AssetDevCount,
       CASE
@@ -174,3 +175,63 @@ ggplotly(p)
 ```
 
 The obvious outlier in @fig-missedmilestoneregression is the project with 0 developers assigned, which is also the only project which missed one of its milestones. This suggests there's a correlation between the number of developers working on a project and the likelihood of the project missing at least one deadline.
+
+
+# Project duration
+
+**Note:** The following analyses assume project duration is a dependent variable.
+
+Among completed projects, project budget is strongly negatively correlated to duration, with a correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$Duration)$estimate`. @fig-projectdurationbudget shows this relationship, as well as a linear regression of the same.
+This suggests that as the budget of a project increases, the duration of the project decreases.
+
+```{r Plot project duration against budget}
+#| label: fig-projectdurationbudget
+#| fig-cap: Linear regression showing the relationship between project budget and duration
+#| echo: true
+#| code-fold: true
+#| warning: false
+#| cache: true
+
+library(ggplot2)
+library(plotly)
+library(scales)
+
+p <- ggplot(completedProjects, aes(Budget, Duration)) + 
+      geom_point() +
+      xlab("Budget") +
+      ylab("Duration (days)") +
+      scale_x_continuous(labels = dollar_format(prefix = "€", scale = 0.001, suffix = "k")) +
+      geom_smooth(formula = y ~ x, method = "lm")
+
+ggplotly(p)
+```
+
+A possible explanation for the inverse relationship between project budget and duration is the size of the dev team on a project. As explored in @fig-budgetvsteamsize, project budget is highly correlated with the number of developers working on the project. Developer count is also highly negatively correlated with project duration (correlation coefficient `r cor.test(completedProjects$AssetDevCount, completedProjects$Duration)$estimate`), as shown in @fig-projectdurationteamsize.
+
+```{r Plot project duration against dev team size}
+#| label: fig-projectdurationteamsize
+#| fig-cap: Figure demonstrating the negative correlation between dev team size and project duration
+#| echo: true
+#| code-fold: true
+#| warning: false
+#| cache: true
+
+library(ggplot2)
+library(plotly)
+library(scales)
+
+p <- ggplot(completedProjects, aes(AssetDevCount, Duration)) + 
+      geom_point() +
+      xlab("Dev team size") +
+      ylab("Duration (days)") +
+      scale_x_continuous(breaks = 
+                           seq(
+                             1,
+                             max(completedProjects$AssetDevCount),
+                             by = 1)
+                         ) + 
+      geom_smooth(formula = y ~ x, method = "lm")
+
+ggplotly(p)
+```
+
