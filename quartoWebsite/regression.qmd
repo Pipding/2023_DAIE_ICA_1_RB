@@ -75,11 +75,7 @@ startedProjects <- projectsOverview %>%
 
 <br>
 
-# Linear regression
-
-Only completed projects are taken into account when performing linear regression as data about incomplete projects are subject to change.
-
-## Budget, team size and asset count
+# Budget, team size and asset count
 
 The total budget of completed projects appears to have no correlation to the number of assets in the project, with a correlation coefficient of `r cor.test(completedProjects$Budget, completedProjects$AssetCount)$estimate`. <br> Predictably, team size has a moderate-to-strong positive correlation (correlation coefficient `r sprintf("%4.3f", cor.test(completedProjects$Budget, completedProjects$AssetDevCount)$estimate)`) with budget. @fig-budgetvsteamsize plots the budgets of completed projects against the size of their dev team. The overlaid linear regression shows the relationship between team size and budget.
 
@@ -113,7 +109,7 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Budget)) +
 ggplotly(p)
 ```
 
-The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. If each developer worked on the same number of assets per project, we would expect these figures to be strongly correlated. The weak correlation therefore suggests that the workload, as measured by the number of assets worked on, is not evenly divided among developers. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget. @fig-assetsvsteamsize shows the correlation between dev team size and asset count.
+The relationship between the number of developers and the number of assets in a given project is weakly positively correlated, with a correlation coefficient of `r sprintf("%4.3f", cor.test(completedProjects$AssetDevCount, completedProjects$AssetCount)$estimate)`. If each developer worked on the same number of assets per project, we would expect these figures to be strongly correlated. The weak correlation therefore suggests that the workload, as measured by the number of assets worked on, is not evenly divided among developers. This may be an explanatory factor for the lack of a direct correlation between the asset count of a project and its budget. The number of assets in the project may act as an intermediate value, obscuring such a relationship. @fig-assetsvsteamsize shows the correlation between dev team size and asset count.
 
 ```{r Plot number of assets in a project against number of asset developers}
 #| label: fig-assetsvsteamsize
@@ -147,11 +143,11 @@ p <- ggplot(completedProjects, aes(AssetDevCount, AssetCount)) +
 ggplotly(p)
 ```
 
-Of the `r nrow(completedProjects)` completed projects, `r nrow(subset(completedProjects, MissedMilestone==TRUE))` missed a milestone. Taking our findings above into account, we can expand our scope to include projects which have been started but not yet finished.
+Of the `r nrow(completedProjects)` completed projects, `r nrow(subset(completedProjects, MissedMilestone==TRUE))` missed a milestone. By expanding our data set to include projects which have been started but not yet completed, we can examine a case where a milestone was missed.
 
 `r nrow(startedProjects)` projects have been started, of which `r `nrow(completedProjects)` have been completed. `r nrow(subset(startedProjects, MissedMilestone==TRUE))`/`r nrow(startedProjects)` of these projects missed a milestone.
 
-By plotting both budget and dev count, we can visualize which of these factors contributes more heavily to the likelihood of missing a milestone. @fig-missedmilestoneregression shows this plot.
+@fig-missedmilestoneregression plots both budget and developer count, as well as an indication of whether a project missed one of its milestones.
 
 ```{r Determining the likelihood of a project missing a milestone given budget & team size}
 #| label: fig-missedmilestoneregression
@@ -173,5 +169,6 @@ p <- ggplot(
 ggplotly(p)
 ```
 
-This plot reveals the number of developers assigned to a project has an outsized impact on the likelihood of missing a milestone and suggests that a lower dev team size is a contributing factor to the likelihood of a project missing a milestone.
+The obvious outlier in @fig-missedmilestoneregression is the project with 0 developers assigned, which is also the only project which missed one of its milestones. This suggests there's a correlation between the number of developers working on a project and the likelihood of the project missing at least one deadline.
+
 
