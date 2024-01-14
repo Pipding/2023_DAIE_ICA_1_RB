@@ -135,6 +135,7 @@ GROUP BY Projects.ProjectID;
    - Budget
    - Whether the project has started (bool)
    - Whether the project has been completed (bool)
+   - Project duration (if completed)
    - Number of assets used in the project
    - Number of developers who worked on the project
    - Whether the project missed any milestones (bool)
@@ -146,6 +147,7 @@ SELECT
     Budget,
     JULIANDAY(StartDate) < JULIANDAY(DATE('now')) AS Started,
     JULIANDAY(EndDate) < JULIANDAY(DATE('now')) AS Completed,
+    JULIANDAY(EndDate) - JULIANDAY(StartDate) AS Duration,
     Count(DISTINCT A.AssetID) AS AssetCount,
     Count(DISTINCT AD.DeveloperID) AS AssetDevCount,
     CASE
