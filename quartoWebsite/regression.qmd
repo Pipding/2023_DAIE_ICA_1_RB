@@ -238,4 +238,6 @@ ggplotly(p)
 Together, these data suggest that dev team size is a key determining factor of both the budget and duration of a project.
 
 # Summary of findings
-
+1. A lack of developers may cause projects to miss a milestone
+2. Developers often work on more than 1 asset per project
+2. Project budget and duration are both highly correlated with the number of developers working on the project
