@@ -64,7 +64,13 @@ completedProjects <- projectsOverview %>%
 if(nrow(projectsOverview) <= 7) {
   knitr::kable(head(projectsOverview, 7), align='lcc')
 } else {
-  DT::datatable(projectsOverview, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+  DT::datatable(
+    projectsOverview,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(list( className = 'dt-center', targets = 2:3))
+      )
+    )
 }
 
 completedProjects <- projectsOverview %>%
@@ -98,13 +104,16 @@ p <- ggplot(completedProjects, aes(AssetDevCount, Budget)) +
       geom_point() +
       xlab("Dev team size") +
       ylab("Budget") +
-      scale_y_continuous(labels = dollar_format(prefix = "€", scale = 0.001, suffix = "k")) + 
-      scale_x_continuous(breaks = 
-                           seq(
-                             1,
-                             max(completedProjects$AssetDevCount),
-                             by = 1)
-                         ) + 
+      scale_y_continuous(
+        labels = dollar_format(
+          prefix = "€",
+          scale = 0.001,
+          suffix = "k"
+        )
+      ) + 
+      scale_x_continuous(
+        breaks = seq(1, max(completedProjects$AssetDevCount),by = 1)
+      ) + 
       geom_smooth(formula = y ~ x, method = "lm")
 
 ggplotly(p)
@@ -169,7 +178,13 @@ p <- ggplot(
   geom_point() +
   xlab("Budget") +
   ylab("Dev team size") +
-  scale_x_continuous(labels = dollar_format(prefix = "€", scale = 0.001, suffix = "k"))
+  scale_x_continuous(
+    labels = dollar_format(
+      prefix = "€",
+      scale = 0.001,
+      suffix = "k"
+    )
+  )
 
 ggplotly(p)
 ```
@@ -200,7 +215,13 @@ p <- ggplot(completedProjects, aes(Budget, Duration)) +
       geom_point() +
       xlab("Budget") +
       ylab("Duration (days)") +
-      scale_x_continuous(labels = dollar_format(prefix = "€", scale = 0.001, suffix = "k")) +
+      scale_x_continuous(
+        labels = dollar_format(
+          prefix = "€",
+          scale = 0.001,
+          suffix = "k"
+        )
+      ) +
       geom_smooth(formula = y ~ x, method = "lm")
 
 ggplotly(p)
