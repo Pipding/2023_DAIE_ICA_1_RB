@@ -9,6 +9,7 @@ website:
         text: SQL Queries
       - regression.qmd
       - technology_exploration.qmd
+      - conclusion.qmd
 
 format:
   html:
