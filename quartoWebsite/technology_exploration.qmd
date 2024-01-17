@@ -1,3 +1,34 @@
 ---
 title: "Technology Exploration"
 ---
+## Quarto Website (Parts A & B)
+The Quarto Website makes little use of technologies which
+were not covered in class. One exception may be the [dollar_format](https://www.rdocumentation.org/packages/scales/versions/0.3.0/topics/dollar_format)
+function of the [scales](https://www.rdocumentation.org/packages/scales/) package 
+which is used to render numbers as currency (e.g. `200000` -> `€200,000`).
+At one point in the project the [predict](https://www.rdocumentation.org/packages/car/versions/3.1-2/topics/Predict)
+function was used in conjunction with an attempt at logistic regression in an effort
+to model the likelihood of a project missing a deadline based on its budget and 
+team size, however this proved to be beyond my skill level and so isn't present 
+in the final version.
+
+## Quarto Dashboard (Part C)
+The Quarto Dashboard uses several packages & methods which were not covered in 
+class, mostly in the two **Plot View** sections.
+
+### Project Timelines
+
+#### Vistime
+The **Project Timelines** page uses the [vistime](https://shosaco.github.io/vistime/)
+package to render timelines. This package is fairly simple to use - the timeline
+shown in the dashboard uses almost default settings. The timeline is missing the 
+`Urban Adventure` game. This seemed like a bug at first, but it's actually because
+the end date for the game is invalid (2023-02-31). I decided not to perform any
+data cleaning on this entry because it's ambiguous whether the date should be
+2023-02-28 or 2023-03-03.
+
+#### daterangeinput
+The [daterangeinput](https://shiny.posit.co/r/reference/shiny/0.12.0/daterangeinput) 
+input is configurable and multi-lingual, but unremarkable in that it does what 
+one would expect and not much else. In the Quarto Dashboard it is used to set
+lower and upper ranges for project start & end dates.
