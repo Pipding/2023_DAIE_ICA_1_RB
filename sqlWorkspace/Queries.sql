@@ -167,3 +167,25 @@ FROM Projects
     JOIN Developers D on D.DeveloperID = PD.DeveloperID
     LEFT JOIN Timelines T on Projects.ProjectID = T.ProjectID
 GROUP BY Projects.ProjectID;
+
+
+-- Selects location and budget information for all projects
+SELECT
+    CustomerCity,
+    CustomerCountry AS Country,
+    SUM(Budget) AS 'TotalBudget',
+    COUNT(ProjectID) AS "ProjectCount"
+FROM Projects
+    JOIN Customers C ON
+        Projects.CustomerID = C.CustomerID
+GROUP BY CustomerCountry
+ORDER BY TotalBudget DESC;
+
+
+SELECT
+    CustomerName,
+    CustomerCity AS City,
+    CustomerCountry AS Country,
+    Budget
+FROM Customers
+    JOIN Projects P on Customers.CustomerID = P.CustomerID;
