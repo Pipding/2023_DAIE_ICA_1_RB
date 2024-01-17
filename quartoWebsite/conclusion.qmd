@@ -1,3 +1,30 @@
 ---
 title: "Conclusion"
 ---
+
+Undoubtedly I've learned several things from this assignment, though it's
+difficult to parse out the most valuable lessons. I certainly gained some 
+appreciation for the utility of a linear regression, which is something I already
+intend on utilizing in other contexts. While exploring the data, I also noticed
+how easy it is to 'lie' with statistics, either by being selective in sampling
+or by presenting things in a misleading way. I noticed this when I was plotting
+a linear regression and I noticed that by simply switching the axes it was
+possible to produce a plot which seemed to point towards opposite conclusions
+(i.e. plotting X against Y vs. plotting Y against X). It was obvious then that 
+someone who doesn't understand how linear regression works could easily be misled.
+This exploration of the data also demonstrated the importance of collecting data
+ - and that over-collecting is likely better than under-collecting - within reason.
+ Obviously too large an amount of data becomes impossible to analyze, but too 
+ little data can be inconclusive.
+
+In the context of this project the statistics took a bit of a back seat. Not 
+having kept track of how my time was spent, I'm fairly confident that a majority 
+of my time was spent coming to grips with the idiosyncrasies of Quarto. I still 
+feel as though I have a fairly tenuous grasp on Quarto and while I can make it 
+do roughly what I want, I don't feel as confident with it as I would with native 
+web programming. Quarto seems like a very niche framework created for data
+scientists who want to do 'web dev stuff'. I've learned some tricks for debugging
+Quarto now, but Quarto as a framework feels a bit immature. The addition of 
+web-development features through the Shiny framework doesn't seem to have come
+with a set of debugging tools, resulting in a very confusing development
+experience.
