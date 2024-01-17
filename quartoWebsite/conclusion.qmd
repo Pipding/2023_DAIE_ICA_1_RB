@@ -2,29 +2,39 @@
 title: "Conclusion"
 ---
 
-Undoubtedly I've learned several things from this assignment, though it's
-difficult to parse out the most valuable lessons. I certainly gained some 
-appreciation for the utility of a linear regression, which is something I already
-intend on utilizing in other contexts. While exploring the data, I also noticed
-how easy it is to 'lie' with statistics, either by being selective in sampling
-or by presenting things in a misleading way. I noticed this when I was plotting
-a linear regression and I noticed that by simply switching the axes it was
-possible to produce a plot which seemed to point towards opposite conclusions
-(i.e. plotting X against Y vs. plotting Y against X). It was obvious then that 
-someone who doesn't understand how linear regression works could easily be misled.
-This exploration of the data also demonstrated the importance of collecting data
- - and that over-collecting is likely better than under-collecting - within reason.
- Obviously too large an amount of data becomes impossible to analyze, but too 
- little data can be inconclusive.
+Undoubtedly I've learned several things from this assignment, though the learning outcomes
+are spread somewhat unevenly across a couple of domains. In terms of statistical
+analysis I've learned firstly how powerful a linear regression can be for 
+identifying non-obvious relationships between observations, and how this can be 
+used to confirm or debunk assumptions.In that same vein, I gained some 
+appreciation for how easy it can be to lie using statistical analysis, even
+unintentionally. The seemingly innocent choice of which observation is assigned
+to which axis can come with preconceived assumptions which will lead to 
+misleading results. I also learned something about the value in collecting data.
+During the early stages of the project when I was looking for relationships
+between observations, I often found myself wanting more data points & more 
+observations to draw from. There's obviously a bit of an art to determining how
+much data to collect - too large a dataset can also make it difficult to
+find relationships between data points - but I have a better appreciation for 
+the impacts having a small amount of data can have on the ability to draw 
+conclusions.
 
-In the context of this project the statistics took a bit of a back seat. Not 
-having kept track of how my time was spent, I'm fairly confident that a majority 
-of my time was spent coming to grips with the idiosyncrasies of Quarto. I still 
-feel as though I have a fairly tenuous grasp on Quarto and while I can make it 
-do roughly what I want, I don't feel as confident with it as I would with native 
-web programming. Quarto seems like a very niche framework created for data
-scientists who want to do 'web dev stuff'. I've learned some tricks for debugging
-Quarto now, but Quarto as a framework feels a bit immature. The addition of 
-web-development features through the Shiny framework doesn't seem to have come
-with a set of debugging tools, resulting in a very confusing development
-experience.
+The other domain where there was significant learning was R/Shiny/Quarto. I have
+some mixed feelings on this. I've definitely learned how to create Quarto
+websites and dashboards, albeit not very good ones. The reason I have mixed 
+feelings about this knowledge is because of the amount of time and effort it took.
+I'm fairly sure the majority of my time spent working on the CA was spent learning
+the idiosyncrasies of Quarto.This is knowledge is, in my opinion, very niche.
+I'm relatively familiar with more standard web development and so in a way I 
+felt hamstrung by Quarto. After all, Quarto intends to provide a more user-friendly
+way to do some basic web development. I found this fairly frustrating, as Quarto
+felt like an abstraction layer which prevented me from tweaking things or
+debugging as I'd be able in TypeScript or JavaScript. I also feel that Quarto is
+probably a lot more intuitive for users who have prior experience with Shiny.
+A lot of Shiny functionality is repackaged in Quarto but it isn't necessarily
+given its own documentation, meaning the user has to do some translation from 
+Shiny to Quarto in order to implement features. All that said, I appreciate that
+it's a niche framework created by and for people who have prior experience with 
+R/Shiny and it's attempting to bridge a gap which would otherwise require users
+to learn new programming languages and frameworks from scratch. I hope to have
+opportunity to use & refine some of the knowledge I've gained in the future.
