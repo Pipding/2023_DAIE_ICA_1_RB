@@ -32,3 +32,36 @@ The [daterangeinput](https://shiny.posit.co/r/reference/shiny/0.12.0/daterangein
 input is configurable and multi-lingual, but unremarkable in that it does what 
 one would expect and not much else. In the Quarto Dashboard it is used to set
 lower and upper ranges for project start & end dates.
+
+### Geographic Spend
+
+#### europop
+The [europop](https://github.com/mdlincoln/europop) package is a package which
+provides historical population estimates for European cities. The 
+**Geographic Spend** page doesn't use any of that data. This package is used
+because it also contains coordinates for European cities, which are used to
+plot the locations for each project in our database.
+
+#### maps
+The [maps](https://www.rdocumentation.org/packages/maps) package is used in the
+**Geographic Spend** page to load a world map which is then drawn using the 
+[geom_polygon](https://plotly.com/ggplot2/geom_polygon/) function of Plotly.
+One issue I had with this map, or rather with Plotly, is that when the map is
+rendered using ggplotly, it renders a popup for each line drawn by the 
+geom_polygon function. I wasn't able to get rid of this popup but I was able
+to remove the text from it. This is the cause of the empty grey box which appears
+when hovering over country borders on the map.
+
+#### fuzzyjoin
+[fuzzyjoin](https://github.com/dgrtwo/fuzzyjoin) provides several functions for
+joining dataframes together based on values that *almost* match. It's often
+used for matching on dataframes which contain user-entered data and therefore 
+might have spelling errors. In the map view, it was used to join the **City** 
+column of the **Projects** table in our database with the **city** column of the
+`europop` dataset, because 'Rome' is called 'Roma' in the `europop` dataset.
+
+#### stringdist
+[stringdist](https://github.com/markvanderloo/stringdist) is used in conjunction
+with `fuzzyjoin`. `fuzzyjoin` can join dataframes based on a custom function and 
+stringdist is used to define a function which measures the "distance" between 
+strings (that is, how similar they are to one another).
