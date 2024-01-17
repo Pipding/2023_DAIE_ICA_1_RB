@@ -8,6 +8,7 @@ website:
       - href: index.qmd
         text: SQL Queries
       - regression.qmd
+      - technology_exploration.qmd
 
 format:
   html:
