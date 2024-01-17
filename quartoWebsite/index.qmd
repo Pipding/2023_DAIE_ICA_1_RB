@@ -69,7 +69,17 @@ if(nrow(projectBudgets) <= 7) {
   knitr::kable(head(projectBudgets, 7), align='lcc')
 } else {
   DT::datatable(
-    projectBudgets, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+    projectBudgets,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 2:3
+        )
+      )
+    )
+  )
 }
 ```
 
@@ -114,7 +124,18 @@ dbDisconnect(con)
 if(nrow(avgDevTimeByAssetCount) <= 7) {
   knitr::kable(head(avgDevTimeByAssetCount, 7), align='c')
 } else {
-  DT::datatable(avgDevTimeByAssetCount, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 0:2))))
+  DT::datatable(
+    avgDevTimeByAssetCount,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 0:2
+        )
+      )
+    )
+  )
 }
 ```
 
@@ -159,7 +180,18 @@ dbDisconnect(con)
 if(nrow(mostSuccessfulDevs) <= 7) {
   knitr::kable(head(mostSuccessfulDevs, 7), align='lc')
 } else {
-  DT::datatable(mostSuccessfulDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2))))
+  DT::datatable(
+    mostSuccessfulDevs,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 2
+        )
+      )
+    )
+  )
 }
 ```
 
@@ -201,7 +233,18 @@ dbDisconnect(con)
 if(nrow(designersAndEngineersExperience) <= 7) {
   knitr::kable(head(designersAndEngineersExperience, 7), align = 'lcc')
 } else {
-  DT::datatable(designersAndEngineersExperience, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+  DT::datatable(
+    designersAndEngineersExperience,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 2:3
+        )
+      )
+    )
+  )
 }
 ```
 
@@ -240,7 +283,18 @@ dbDisconnect(con)
 if(nrow(projectLeads) <= 7) {
   knitr::kable(head(projectLeads, 7), align = 'c')
 } else {
-  DT::datatable(projectLeads, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 1))))
+  DT::datatable(
+    projectLeads,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 1
+        )
+      )
+    )
+  )
 }
 ```
 
@@ -291,6 +345,17 @@ dbDisconnect(con)
 if(nrow(multiProjectDevs) <= 7) {
   knitr::kable(head(multiProjectDevs, 7), align = 'lcc')
 } else {
-  DT::datatable(multiProjectDevs, options = list(pageLength = 8, columnDefs = list(list( className = 'dt-center', targets = 2:3))))
+  DT::datatable(
+    multiProjectDevs,
+    options = list(
+      pageLength = 8,
+      columnDefs = list(
+        list(
+          className = 'dt-center',
+          targets = 2:3
+        )
+      )
+    )
+  )
 }
 ```
